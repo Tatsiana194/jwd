@@ -1,0 +1,12 @@
+в Main классе логер и ссылка на Point
+в Point классе только логер
+
+в консоли из папки fersthomework ввожу
+javac -d app src/com/epam/jwd/model/Point.java src/com/epam/jwd/app/Main.java -classpath lib/log4j-1.2.17.jar:lib/log4j-api-2.14.0.jar:lib/log4j-core-2.14.0.jar
+java -classpath ./app/:./lib/log4j-1.2.17.jar:./lib/log4j-api-2.14.0.jar:./lib/log4j-core-2.14.0.jar:./src com.epam.jwd.app.Main
+
+копирую папки lib app и файл properties в папку atherplase
+
+в папке atherplase
+java -classpath ./app/:./lib/log4j-1.2.17.jar:./lib/log4j-api-2.14.0.jar:./lib/log4j-core-2.14.0.jar:./ com.epam.jwd.app.Main
+
