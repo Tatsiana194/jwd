@@ -1,12 +1,18 @@
 package com.epam.jwd.model;
 
+import com.epam.jwd.strategy.FigurePropertiesStrategy;
+
 public abstract class Figure {
     private static int id;
-
     private FigureType figureType;
+    private FigurePropertiesStrategy figurePropertiesStrategy;
 
-    public Figure(FigureType figureType) {
+    public Figure(FigureType figureType, FigurePropertiesStrategy figurePropertiesStrategy) {
         this.figureType = figureType;
+        this.figurePropertiesStrategy = figurePropertiesStrategy;
         id++;
+    }
+
+    protected Figure() {
     }
 }

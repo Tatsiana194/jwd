@@ -3,23 +3,20 @@ package com.epam.jwd.model;
 public class Line extends Figure {
     private Point pointA;
     private Point pointB;
+    private static Line instance;
 
-    public Line(FigureType figureType, Point pointA, Point pointB) {
-        super(figureType);
-        this.pointA = pointA;
-        this.pointB = pointB;
+    private Line() {
     }
 
-    public Point getPointA() {
-        return pointA;
+    public static Line getInstance() {
+        if (instance == null) {
+            instance = new Line();
+        }
+        return instance;
     }
 
     public void setPointA(Point pointA) {
         this.pointA = pointA;
-    }
-
-    public Point getPointB() {
-        return pointB;
     }
 
     public void setPointB(Point pointB) {
