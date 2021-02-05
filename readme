@@ -1,12 +1,18 @@
-в Main классе логер и ссылка на Point
-в Point классе только логер
+7. Pattern Strategy
+ 7.1. Создать поле figurePropertiesStrategy в классе Figure.
+ 7.2. Создать пакет 'com.epam.jwd.strategy' в котором реализовать соответствующий паттерн (подсчёт площади и периметра, если это возможно).
+8. Pattern Singleton
+ 8.1. Для реализованных стратегий, применить паттерн Singleton (1 Lazy. 1 ENUM. Остальные самые простые)
+9. Pattern Factory
+ 9.1. Создать пакет 'com.epam.jwd.model' в котором реализовать паттерн Factory, который будет создавать единственный экземпляр фигуры с задаными параметрами.
+ 9.2. Запретить создание фигур из вне фабрики.
+10. Создать класс 'model.MultiAngleFigure' который наследует Figure.
+ 10.1. Создать несколько экземпляров N-угольников (4 <= N <= 6)
 
-в консоли из папки fersthomework ввожу
-javac -d app src/com/epam/jwd/model/Point.java src/com/epam/jwd/app/Main.java -classpath lib/log4j-1.2.17.jar:lib/log4j-api-2.14.0.jar:lib/log4j-core-2.14.0.jar
-java -classpath ./app/:./lib/log4j-1.2.17.jar:./lib/log4j-api-2.14.0.jar:./lib/log4j-core-2.14.0.jar:./src com.epam.jwd.app.Main
-
-копирую папки lib app и файл properties в папку atherplase
-
-в папке atherplase
-java -classpath ./app/:./lib/log4j-1.2.17.jar:./lib/log4j-api-2.14.0.jar:./lib/log4j-core-2.14.0.jar:./ com.epam.jwd.app.Main
-
+ 11. Exceptions
+  11.1. Создать пакет 'com.epam.jwd.exception' в котором создать семейство checked exception FigureException.
+   11.1.1. Создать наследника FigureException - FigureNotExistException
+   11.1.2. Добавить FigureNotExistException в сигнатуру метода фабрики.
+  11.2. Создать пакет 'com.epam.jwd.service' в котором создать interface FigurePostProcessor с методом 'Figure process(Figure figure) throws FigureException'
+   11.2.1. В подпакете 'com.epam.jwd.service.impl' реализовать интерфейс классом FigureExistencePostProcessor.
+   11.2.2. Вызывать метод 'process' в конце работы фабрики.

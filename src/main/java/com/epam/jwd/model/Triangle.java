@@ -1,12 +1,23 @@
 package com.epam.jwd.model;
 
+import com.epam.jwd.strategy.FigurePropertiesStrategy;
+import com.epam.jwd.strategy.TriangleStrategy;
+
 public class Triangle extends Figure {
     private Point pointA;
     private Point pointB;
     private Point pointC;
+    private FigurePropertiesStrategy figurePropertiesStrategy = TriangleStrategy.INSTANCE;
+    private static Triangle instance;
 
-    public Triangle(FigureType figureType) {
-        super(figureType);
+    private Triangle() {
+    }
+
+    public static Triangle getInstance() {
+        if (instance == null) {
+            instance = new Triangle();
+        }
+        return instance;
     }
 
     public Point getPointA() {
@@ -23,6 +34,14 @@ public class Triangle extends Figure {
 
     public void setPointB(Point pointB) {
         this.pointB = pointB;
+    }
+
+    public int countArea(Triangle triangle) {
+        return figurePropertiesStrategy.countArea(triangle);
+    }
+
+    public int countPerimeter(Triangle triangle) {
+        return figurePropertiesStrategy.countPerimeter(triangle);
     }
 
     public Point getPointC() {
@@ -45,10 +64,14 @@ public class Triangle extends Figure {
         Point b = triangle.getPointB();
         Point c = triangle.getPointC();
 
-        //formula for calculating a line by coordinates
-        if (((c.getX() - a.getX()) / (b.getX() - a.getX())) == ((c.getY() - a.getY()) / (b.getX() - a.getY()))) {
+        //the area of triangle is | ((x1-x3)*(y2-y3)-(x2-x3)*(y1-y3)/2 |
+        int areaTriangle = Math.abs((a.getX() - c.getX()) * (b.getY() - c.getY()) - (b.getX() - c.getX()) * (a.getY() - c.getY()) / 2);
+
+        //if the area of triangle is zero, then the triangle does not exist
+        if (areaTriangle == 0) {
             return false;
         }
+
         return true;
     }
 
