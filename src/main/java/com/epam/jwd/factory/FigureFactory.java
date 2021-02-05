@@ -1,8 +1,9 @@
 package com.epam.jwd.factory;
 
+import com.epam.jwd.exception.FigureNotExistException;
 import com.epam.jwd.model.*;
 
-public class FigureFactory {
+public class FigureFactory{
     private static FigureFactory instance;
 
     private FigureFactory() {
@@ -15,7 +16,7 @@ public class FigureFactory {
         return instance;
     }
 
-    public Figure getFigure(FigureType figureType, Point[] points) {
+    public Figure getFigure(FigureType figureType, Point[] points) throws FigureNotExistException {
         Figure figure = null;
         switch (figureType) {
             case LINE -> {
