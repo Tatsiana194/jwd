@@ -8,6 +8,11 @@ public class MultiAngleFigure extends Figure {
     private Point pointE;
     private Point pointF;
 
+    @Override
+    public Point[] getPoints() {
+        return new Point[]{pointA, pointB, pointC, pointD, pointE, pointF};
+    }
+
     public void setPointA(Point pointA) {
         this.pointA = pointA;
     }

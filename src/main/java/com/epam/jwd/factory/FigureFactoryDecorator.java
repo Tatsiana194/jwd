@@ -13,7 +13,7 @@ public abstract class FigureFactoryDecorator implements FigureFactory {
     }
 
     @Override
-    public Figure createFigure(FigureType figureType, Point[] points) throws FigureNotExistException {
+    public Figure createFigure(FigureType figureType, Point[] points) throws FigureNotExistException, Exception {
         return figureFactory.createFigure(figureType, points);
     }
 }
