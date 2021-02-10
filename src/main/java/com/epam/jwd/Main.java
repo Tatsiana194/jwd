@@ -1,11 +1,9 @@
 package com.epam.jwd;
 
 import com.epam.jwd.exception.FigureException;
-import com.epam.jwd.exception.FigureNotExistException;
-import com.epam.jwd.factory.FigureFactory;
+import com.epam.jwd.factory.ApplicationContext;
+import com.epam.jwd.factory.impl.ConcreteApplicationContext;
 import com.epam.jwd.model.*;
-import com.epam.jwd.service.FigurePostProcessor;
-import com.epam.jwd.service.impl.FigureExistencePostProcessor;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -17,7 +15,7 @@ public class Main {
     private static Triangle[] triangles = new Triangle[2];
     private static Square[] squares = new Square[1];
     private static MultiAngleFigure[] multiAngleFigures = new MultiAngleFigure[5];
-    private static FigureFactory figureFactory = FigureFactory.getInstance();
+    private static ApplicationContext applicationContext = ConcreteApplicationContext.getInstance();
 
     public static void main(String[] args) {
         showPoints(creatorPointArray());
@@ -39,9 +37,8 @@ public class Main {
     private static Line[] creatorLinesArray() {
         for (int i = 0; i < lines.length; i++) {
             points = creatorPointArray();
-            try (FigureExistencePostProcessor figurePostProcessor = new FigureExistencePostProcessor()) {
-                lines[i] = (Line) figureFactory.getFigure(FigureType.LINE, points);
-                figurePostProcessor.figureProcess(lines[i]);
+            try {
+                lines[i] = (Line) applicationContext.createFigureFactory().createFigure(FigureType.LINE, points);
             } catch (FigureException e) {
                 logger.log(Level.INFO, "Something went wrong while creating the line");
                 logger.log(Level.ERROR, e.getMessage());
@@ -50,21 +47,20 @@ public class Main {
                 logger.log(Level.ERROR, e.getMessage());
                 e.printStackTrace();
             }
-        }
+        }//figurePostProcessor.figureProcess(lines[i]);
         return lines;
     }
 
     private static Triangle[] creatorTrianglesArray() {
         for (int i = 0; i < triangles.length; i++) {
             points = creatorPointArray();
-            try (FigureExistencePostProcessor figureExistencePostProcessor = new FigureExistencePostProcessor()){
-                triangles[i] = (Triangle) figureFactory.getFigure(FigureType.TRIANGLE, points);
-                figureExistencePostProcessor.figureProcess(triangles[i]);
+            try {
+                triangles[i] = (Triangle) applicationContext.createFigureFactory().createFigure(FigureType.TRIANGLE, points);
             } catch (FigureException e) {
                 logger.log(Level.ERROR, "Something went wrong while creating the triangle");
                 logger.log(Level.ERROR, e.getMessage());
                 e.printStackTrace();
-            }catch (Exception e) {
+            } catch (Exception e) {
                 logger.log(Level.ERROR, e.getMessage());
                 e.printStackTrace();
             }
@@ -75,14 +71,16 @@ public class Main {
     private static Square[] creatorSquaresArray() {
         for (int i = 0; i < squares.length; i++) {
             points = creatorPointArray();
-            try (FigureExistencePostProcessor figureExistencePostProcessor= new FigureExistencePostProcessor()){
-                squares[i] = (Square) figureFactory.getFigure(FigureType.SQUARE, points);
-                figureExistencePostProcessor.figureProcess(squares[i]);
+            try
+                    //(FigureExistencePostProcessor figureExistencePostProcessor = new FigureExistencePostProcessor())
+            {
+                squares[i] = (Square) applicationContext.createFigureFactory().createFigure(FigureType.SQUARE, points);
+             //   figureExistencePostProcessor.figureProcess(squares[i]);
             } catch (FigureException e) {
                 logger.log(Level.ERROR, "Something went wrong while creating the square");
                 logger.log(Level.ERROR, e.getMessage());
                 e.printStackTrace();
-            }catch (Exception e) {
+            } catch (Exception e) {
                 logger.log(Level.ERROR, e.getMessage());
                 e.printStackTrace();
             }
@@ -93,9 +91,11 @@ public class Main {
     private static MultiAngleFigure[] creatorMultiAnglesArray() {
         for (int i = 0; i < multiAngleFigures.length; i++) {
             points = creatorPointArray();
-            try (FigureExistencePostProcessor figureExistencePostProcessor = new FigureExistencePostProcessor()){
-                multiAngleFigures[i] = (MultiAngleFigure) figureFactory.getFigure(FigureType.MULTIANGLE, points);
-                figureExistencePostProcessor.figureProcess(multiAngleFigures[i]);
+            try
+                    //(FigureExistencePostProcessor figureExistencePostProcessor = new FigureExistencePostProcessor())
+            {
+                multiAngleFigures[i] = (MultiAngleFigure) applicationContext.createFigureFactory().createFigure(FigureType.MULTIANGLE, points);
+          //      figureExistencePostProcessor.figureProcess(multiAngleFigures[i]);
             } catch (FigureException e) {
                 logger.log(Level.ERROR, "Something went wrong while creating the multiAngleFigure");
                 logger.log(Level.ERROR, e.getMessage());

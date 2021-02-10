@@ -2,7 +2,7 @@ package com.epam.jwd.model;
 
 import com.epam.jwd.strategy.FigurePropertiesStrategy;
 
-public abstract class Figure {
+public class Figure {
     private static int id;
     private FigureType figureType;
     private FigurePropertiesStrategy figurePropertiesStrategy;
@@ -13,6 +13,6 @@ public abstract class Figure {
         id++;
     }
 
-    protected Figure() {
+    public Figure() {
     }
 }
