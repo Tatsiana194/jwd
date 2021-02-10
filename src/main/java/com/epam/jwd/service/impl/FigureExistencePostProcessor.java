@@ -26,9 +26,4 @@ public class FigureExistencePostProcessor extends FigureFactoryDecorator impleme
     public void close() throws Exception {
         logger.log(Level.INFO, "In method close()");
     }
-
-    @Override
-    public Figure getFigure() {
-        return null;
-    }
 }

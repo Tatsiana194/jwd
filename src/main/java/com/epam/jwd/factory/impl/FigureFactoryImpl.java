@@ -5,7 +5,7 @@ import com.epam.jwd.factory.FigureFactory;
 import com.epam.jwd.model.*;
 
 public class FigureFactoryImpl implements FigureFactory {
-    Figure figure = new Figure();
+    Figure figure;
 
     public FigureFactoryImpl() {
     }
@@ -13,20 +13,20 @@ public class FigureFactoryImpl implements FigureFactory {
     public Figure createFigure(FigureType figureType, Point[] points) throws FigureNotExistException {
         switch (figureType) {
             case LINE -> {
-                Line line = Line.getInstance();
+                Line line = new Line();
                 line.setPointA(points[0]);
                 line.setPointB(points[1]);
                 figure = line;
             }
             case TRIANGLE -> {
-                Triangle triangle = Triangle.getInstance();
+                Triangle triangle = new Triangle();
                 triangle.setPointA(points[0]);
                 triangle.setPointB(points[1]);
                 triangle.setPointC(points[2]);
                 figure = triangle;
             }
             case SQUARE -> {
-                Square square = Square.getInstance();
+                Square square = new Square();
                 square.setPointA(points[0]);
                 square.setPointB(points[1]);
                 square.setPointC(points[2]);
@@ -62,12 +62,6 @@ public class FigureFactoryImpl implements FigureFactory {
                 figure = multiAngleFigure;
             }
         }
-        this.figure = figure;
-        return figure;
-    }
-
-    @Override
-    public Figure getFigure() {
         return figure;
     }
 }

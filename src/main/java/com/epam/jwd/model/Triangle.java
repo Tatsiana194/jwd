@@ -8,16 +8,13 @@ public class Triangle extends Figure {
     private Point pointB;
     private Point pointC;
     private FigurePropertiesStrategy figurePropertiesStrategy = TriangleStrategy.INSTANCE;
-    private static Triangle instance;
 
-    private Triangle() {
+    public Triangle() {
     }
 
-    public static Triangle getInstance() {
-        if (instance == null) {
-            instance = new Triangle();
-        }
-        return instance;
+    @Override
+    public Point[] getPoints() {
+        return new Point[]{pointA, pointB, pointC};
     }
 
     public Point getPointA() {

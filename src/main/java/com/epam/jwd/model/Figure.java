@@ -2,10 +2,11 @@ package com.epam.jwd.model;
 
 import com.epam.jwd.strategy.FigurePropertiesStrategy;
 
-public class Figure {
+public abstract class Figure {
     private static int id;
     private FigureType figureType;
     private FigurePropertiesStrategy figurePropertiesStrategy;
+    private Point[] points;
 
     public Figure(FigureType figureType, FigurePropertiesStrategy figurePropertiesStrategy) {
         this.figureType = figureType;
@@ -14,5 +15,13 @@ public class Figure {
     }
 
     public Figure() {
+    }
+
+    public Point[] getPoints() {
+        return points;
+    }
+
+    public FigureType getFigureType() {
+        return figureType;
     }
 }

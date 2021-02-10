@@ -3,16 +3,8 @@ package com.epam.jwd.model;
 public class Line extends Figure {
     private Point pointA;
     private Point pointB;
-    private static Line instance;
 
-    private Line() {
-    }
-
-    public static Line getInstance() {
-        if (instance == null) {
-            instance = new Line();
-        }
-        return instance;
+    public Line() {
     }
 
     public void setPointA(Point pointA) {
@@ -28,6 +20,11 @@ public class Line extends Figure {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public Point[] getPoints() {
+        return new Point[]{pointA, pointB};
     }
 
     @Override

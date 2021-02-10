@@ -9,16 +9,13 @@ public class Square extends Figure {
     private Point pointC;
     private Point pointD;
     private FigurePropertiesStrategy figurePropertiesStrategy = SquareStrategy.getInstance();
-    private static Square instance;
 
-    private Square() {
+    public Square() {
     }
 
-    public static Square getInstance() {
-        if (instance == null) {
-            instance = new Square();
-        }
-        return instance;
+    @Override
+    public Point[] getPoints() {
+        return new Point[]{pointA, pointB, pointC, pointD};
     }
 
     public int countArea(Square square) {
