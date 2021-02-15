@@ -1,5 +1,6 @@
 package com.epam.jwd.strategy;
 
+import com.epam.jwd.model.Figure;
 import com.epam.jwd.model.Point;
 import com.epam.jwd.model.Square;
 
@@ -14,8 +15,8 @@ public class SquareStrategy implements FigurePropertiesStrategy {
         return instance;
     }
 
-    public int countArea(Object o) {
-        this.square = (Square) o;
+    public int countArea(Figure figure) {
+        this.square = (Square) figure;
         Point a = square.getPointA();
         Point b = square.getPointB();
 
@@ -28,8 +29,8 @@ public class SquareStrategy implements FigurePropertiesStrategy {
     }
 
     @Override
-    public int countPerimeter(Object o) {
-        this.square = (Square) o;
+    public int countPerimeter(Figure figure) {
+        this.square = (Square) figure;
         Point a = square.getPointA();
         Point b = square.getPointB();
         Point c = square.getPointC();

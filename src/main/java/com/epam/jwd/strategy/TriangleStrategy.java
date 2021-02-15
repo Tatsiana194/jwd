@@ -1,5 +1,6 @@
 package com.epam.jwd.strategy;
 
+import com.epam.jwd.model.Figure;
 import com.epam.jwd.model.Point;
 import com.epam.jwd.model.Triangle;
 
@@ -10,8 +11,8 @@ public enum TriangleStrategy implements FigurePropertiesStrategy {
     private TriangleStrategy(){}
 
     @Override
-    public int countArea(Object o) {
-        this.triangle = (Triangle) o;
+    public int countArea(Figure figure) {
+        this.triangle = (Triangle) figure;
         Point a = triangle.getPointA();
         Point b = triangle.getPointB();
         Point c = triangle.getPointC();
@@ -22,8 +23,8 @@ public enum TriangleStrategy implements FigurePropertiesStrategy {
     }
 
     @Override
-    public int countPerimeter(Object o) {
-        this.triangle = (Triangle) o;
+    public int countPerimeter(Figure figure) {
+        this.triangle = (Triangle) figure;
         Point a = triangle.getPointA();
         Point b = triangle.getPointB();
         Point c = triangle.getPointC();

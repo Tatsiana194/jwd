@@ -17,6 +17,37 @@ public class Triangle extends Figure {
         return new Point[]{pointA, pointB, pointC};
     }
 
+    public int countArea(Triangle triangle) {
+        return figurePropertiesStrategy.countArea(triangle);
+    }
+
+    public int countPerimeter(Triangle triangle) {
+        return figurePropertiesStrategy.countPerimeter(triangle);
+    }
+
+    public boolean isFigure(Triangle triangle) {
+        if (triangle.pointA == triangle.pointB | triangle.pointB == triangle.pointC | triangle.pointA == triangle.pointC) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean isValidTriangle(Triangle triangle) {
+        Point a = triangle.getPointA();
+        Point b = triangle.getPointB();
+        Point c = triangle.getPointC();
+
+        //the area of triangle is | ((x1-x3)*(y2-y3)-(x2-x3)*(y1-y3)/2 |
+        int areaTriangle = Math.abs((a.getX() - c.getX()) * (b.getY() - c.getY()) - (b.getX() - c.getX()) * (a.getY() - c.getY()) / 2);
+
+        //if the area of triangle is zero, then the triangle does not exist
+        if (areaTriangle == 0) {
+            return false;
+        }
+
+        return true;
+    }
+
     public Point getPointA() {
         return pointA;
     }
@@ -33,43 +64,12 @@ public class Triangle extends Figure {
         this.pointB = pointB;
     }
 
-    public int countArea(Triangle triangle) {
-        return figurePropertiesStrategy.countArea(triangle);
-    }
-
-    public int countPerimeter(Triangle triangle) {
-        return figurePropertiesStrategy.countPerimeter(triangle);
-    }
-
     public Point getPointC() {
         return pointC;
     }
 
     public void setPointC(Point pointC) {
         this.pointC = pointC;
-    }
-
-    public boolean isFigure(Triangle triangle) {
-        if (triangle.pointA == triangle.pointB | triangle.pointB == triangle.pointC | triangle.pointA == triangle.pointC) {
-            return false;
-        }
-        return true;
-    }
-
-    public static boolean isValidTriangle(Triangle triangle) {
-        Point a = triangle.getPointA();
-        Point b = triangle.getPointB();
-        Point c = triangle.getPointC();
-
-        //the area of triangle is | ((x1-x3)*(y2-y3)-(x2-x3)*(y1-y3)/2 |
-        int areaTriangle = Math.abs((a.getX() - c.getX()) * (b.getY() - c.getY()) - (b.getX() - c.getX()) * (a.getY() - c.getY()) / 2);
-
-        //if the area of triangle is zero, then the triangle does not exist
-        if (areaTriangle == 0) {
-            return false;
-        }
-
-        return true;
     }
 
     @Override

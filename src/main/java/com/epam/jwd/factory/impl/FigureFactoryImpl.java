@@ -5,9 +5,17 @@ import com.epam.jwd.factory.FigureFactory;
 import com.epam.jwd.model.*;
 
 public class FigureFactoryImpl implements FigureFactory {
+    private static FigureFactoryImpl instance;
     Figure figure;
 
-    public FigureFactoryImpl() {
+    private FigureFactoryImpl() {
+    }
+
+    public static FigureFactoryImpl getInstance() {
+        if (instance == null) {
+            instance = new FigureFactoryImpl();
+        }
+        return instance;
     }
 
     public Figure createFigure(FigureType figureType, Point[] points) throws FigureNotExistException {

@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class PreProcessorDecorator extends FigureFactoryDecorator implements PreProcessor {
     private Logger logger = LogManager.getLogger(PreProcessorDecorator.class);
@@ -27,14 +28,16 @@ public class PreProcessorDecorator extends FigureFactoryDecorator implements Pre
     public void preProcess() throws Exception {
         Point[] points = figure.getPoints();
         List<Figure> figures = concreteApplicationContext.getFigureCache();
-        logger.log(Level.INFO, "In preProcessor. sout figureCache ");
-        for (Figure figureInCache : figures) {
-            if (figureInCache.equals(figure)) {
-                new Exception();
-            }
+        Optional<Figure> figureUnique = figures
+                .stream()
+                .filter(figure1 -> figure1.equals(figure))
+                .findAny();
+        if (figureUnique.isPresent()) {
+            logger.log(Level.INFO, " the figure is already created ");
         }
-        logger.log(Level.INFO, "in preProcessor, sout points ");
-        Arrays.stream(points).forEach(System.out::println);
+        Arrays
+                .stream(points)
+                .forEach(System.out::println);
     }
 
     @Override
