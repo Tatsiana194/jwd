@@ -15,8 +15,8 @@ import java.util.List;
 
 public class PostProcessorDecorator extends FigureFactoryDecorator implements PostProcessor {
     private Logger logger = LogManager.getLogger(PostProcessorDecorator.class);
+    private List<Figure> figures = ConcreteApplicationContext.getInstance().getFigureCache();
     private Figure figure;
-    private ConcreteApplicationContext concreteApplicationContext = ConcreteApplicationContext.getInstance();
 
     public PostProcessorDecorator(FigureFactory figureFactory) {
         super(figureFactory);
@@ -24,15 +24,13 @@ public class PostProcessorDecorator extends FigureFactoryDecorator implements Po
 
     @Override
     public Figure postProcess() {
-        List<Figure> figures = concreteApplicationContext.getFigureCache();
         figures.add(figure);
-        logger.log(Level.INFO, "In postProcess. sout figureCache ");
-        figures.stream().forEach(System.out::println);
+        figures.forEach(figure1 -> logger.log(Level.INFO, figure1));
         return figure;
     }
 
     @Override
-    public Figure createFigure(FigureType figureType, Point[] points) throws FigureNotExistException {
+    public Figure createFigure(FigureType figureType, Point[] points) throws FigureNotExistException, Exception {
         this.figure = super.createFigure(figureType, points);
         postProcess();
         return figure;

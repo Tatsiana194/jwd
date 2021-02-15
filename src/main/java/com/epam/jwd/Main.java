@@ -2,11 +2,14 @@ package com.epam.jwd;
 
 import com.epam.jwd.exception.FigureException;
 import com.epam.jwd.factory.ApplicationContext;
+import com.epam.jwd.factory.FigureFactory;
 import com.epam.jwd.factory.impl.ConcreteApplicationContext;
 import com.epam.jwd.model.*;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+
+import java.util.Arrays;
 
 public class Main {
     private static Logger logger = LogManager.getLogger(Main.class);
@@ -16,6 +19,7 @@ public class Main {
     private static Square[] squares = new Square[1];
     private static MultiAngleFigure[] multiAngleFigures = new MultiAngleFigure[5];
     private static ApplicationContext applicationContext = ConcreteApplicationContext.getInstance();
+    private static FigureFactory figureFactory = applicationContext.getFigureFactory();
 
     public static void main(String[] args) {
         showPoints(creatorPointArray());
@@ -38,7 +42,7 @@ public class Main {
         for (int i = 0; i < lines.length; i++) {
             points = creatorPointArray();
             try {
-                lines[i] = (Line) applicationContext.createFigureFactory().createFigure(FigureType.LINE, points);
+                lines[i] = (Line) figureFactory.createFigure(FigureType.LINE, points);
             } catch (FigureException e) {
                 logger.log(Level.INFO, "Something went wrong while creating the line");
                 logger.log(Level.ERROR, e.getMessage());
@@ -55,7 +59,7 @@ public class Main {
         for (int i = 0; i < triangles.length; i++) {
             points = creatorPointArray();
             try {
-                triangles[i] = (Triangle) applicationContext.createFigureFactory().createFigure(FigureType.TRIANGLE, points);
+                triangles[i] = (Triangle) figureFactory.createFigure(FigureType.TRIANGLE, points);
             } catch (FigureException e) {
                 logger.log(Level.ERROR, "Something went wrong while creating the triangle");
                 logger.log(Level.ERROR, e.getMessage());
@@ -72,7 +76,7 @@ public class Main {
         for (int i = 0; i < squares.length; i++) {
             points = creatorPointArray();
             try {
-                squares[i] = (Square) applicationContext.createFigureFactory().createFigure(FigureType.SQUARE, points);
+                squares[i] = (Square) figureFactory.createFigure(FigureType.SQUARE, points);
             } catch (FigureException e) {
                 logger.log(Level.ERROR, "Something went wrong while creating the square");
                 logger.log(Level.ERROR, e.getMessage());
@@ -88,11 +92,8 @@ public class Main {
     private static MultiAngleFigure[] creatorMultiAnglesArray() {
         for (int i = 0; i < multiAngleFigures.length; i++) {
             points = creatorPointArray();
-            try
-            //(FigureExistencePostProcessor figureExistencePostProcessor = new FigureExistencePostProcessor())
-            {
-                multiAngleFigures[i] = (MultiAngleFigure) applicationContext.createFigureFactory().createFigure(FigureType.MULTIANGLE, points);
-                //      figureExistencePostProcessor.figureProcess(multiAngleFigures[i]);
+            try {
+                multiAngleFigures[i] = (MultiAngleFigure) figureFactory.createFigure(FigureType.MULTIANGLE, points);
             } catch (FigureException e) {
                 logger.log(Level.ERROR, "Something went wrong while creating the multiAngleFigure");
                 logger.log(Level.ERROR, e.getMessage());
@@ -101,7 +102,6 @@ public class Main {
                 logger.log(Level.ERROR, e.getMessage());
                 e.printStackTrace();
             }
-
         }
         return multiAngleFigures;
     }
@@ -130,7 +130,7 @@ public class Main {
                 logger.log(Level.ERROR, triangle.toString() + " is not a figure " + triangle.getClass().getSimpleName());
                 break;
             }
-            if (!Triangle.isValidTriangle(triangle)) {
+            if (!triangle.isValidTriangle(triangle)) {
                 logger.log(Level.ERROR, triangle.getClass().getSimpleName() + " cannot exist");
                 break;
             }
@@ -141,19 +141,17 @@ public class Main {
     }
 
     private static void showSquares(Square[] squares) {
-        for (Square square : squares) {
-            if (!square.isFigure(square)) {
-                logger.log(Level.ERROR, Object.class.getSimpleName() + " is not a figure");
-                break;
-            }
-            if (!square.isValidSquare(square)) {
-                logger.log(Level.ERROR, Object.class.getSimpleName() + " is not a square");
-                break;
-            }
-            logger.log(Level.INFO, square.toString());
-            logger.log(Level.INFO, "Area of Square is " + square.countArea(square));
-            logger.log(Level.INFO, "Perimeter of Square is " + square.countPerimeter(square));
-        }
+        Arrays.stream(squares)
+                .filter(square -> square.isFigure(square))
+                .forEach(square -> logger.log(Level.ERROR, square.getFigureType() + " is not a figure"));
+        Arrays.stream(squares)
+                .filter(square -> square.isValidSquare(square))
+                .forEach(square -> logger.log(Level.ERROR, square.getFigureType() + " is not a square"));
+        Arrays.stream(squares)
+                .filter(square -> !square.isFigure(square))
+                .filter(square -> !square.isValidSquare(square))
+                .peek(square -> logger.log(Level.INFO, "Area of Square is " + square.countArea(square)))
+                .forEach(square -> logger.log(Level.INFO, "Perimeter of Square is " + square.countPerimeter(square)));
     }
 
     private static void showMultiAngleFigure(MultiAngleFigure[] multiAngleFigures) {
